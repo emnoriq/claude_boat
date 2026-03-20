@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ボートレース4回転がし</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>4回転がし</h1>
+    <p class="subtitle">三連単ボックス6点 × 堅いレース自動抽出</p>
+  </header>
+
+  <main>
+    <!-- レース場選択 & 自動取得 -->
+    <section class="card" id="step1">
+      <h2>レース場を選んでボタンを押すだけ</h2>
+      <div class="step1-header">
+        <div class="field">
+          <label for="venue">レース場</label>
+          <select id="venue"></select>
+        </div>
+        <div class="field">
+          <label for="raceDate">日付</label>
+          <input type="date" id="raceDate">
+        </div>
+      </div>
+      <button id="fetchBtn" class="btn btn-primary btn-large" style="margin-top:14px;width:100%;">
+        データ自動取得 → 堅い4レース抽出
+      </button>
+      <div id="statusMsg" class="status-msg hidden"></div>
+    </section>
+
+    <!-- ローディング -->
+    <div id="loading" class="loading hidden">
+      <div class="spinner"></div>
+      <p id="loadingText">データ取得中...</p>
+    </div>
+
+    <!-- 転がしプラン -->
+    <section class="card hidden" id="step2">
+      <h2>転がしプラン</h2>
+      <p class="hint">堅さスコア上位4レースを時刻順に自動抽出</p>
+      <div id="korogashiPlan"></div>
+      <div id="korogashiSummary" class="summary-box"></div>
+    </section>
+
+    <!-- 結果入力 -->
+    <section class="card hidden" id="step3">
+      <h2>結果入力</h2>
+      <p class="hint">レース終了後に結果を入力。不的中で転がし終了。</p>
+      <div id="resultArea"></div>
+      <div id="korogashiResult" class="hidden"></div>
+    </section>
+
+    <!-- 全レースランキング -->
+    <section class="card hidden" id="allRanking">
+      <h2>全レース堅さランキング</h2>
+      <div id="rankingList"></div>
+    </section>
+
+    <!-- 手動入力フォールバック -->
+    <section class="card hidden" id="manualSection">
+      <h2>手動入力（データ取得失敗時）</h2>
+      <p class="hint">データが取得できない場合はこちらから入力してください</p>
+      <div class="step1-header" style="margin-bottom:10px;">
+        <div class="field">
+          <label for="totalRaces">レース数</label>
+          <select id="totalRaces">
+            <option value="12" selected>12R</option>
+            <option value="10">10R</option>
+            <option value="8">8R</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="windDir">風向</label>
+          <select id="windDir">
+            <option value="none">無風</option>
+            <option value="head">向かい風</option>
+            <option value="tail">追い風</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="windSpd">風速(m)</label>
+          <input type="number" id="windSpd" value="2" min="0" max="15">
+        </div>
+      </div>
+      <button id="generateGrid" class="btn btn-secondary">入力グリッドを生成</button>
+      <div id="gridContainer" style="margin-top:12px;"></div>
+      <div class="action-area hidden" id="manualAnalyzeArea">
+        <button id="manualAnalyzeBtn" class="btn btn-primary btn-large">転がしプラン作成</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>※ 本アプリは統計データに基づく予想支援ツールです。的中を保証するものではありません。</p>
+    <p>※ 舟券の購入は自己責任でお願いします。</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
