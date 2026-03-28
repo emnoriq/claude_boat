@@ -1,0 +1,360 @@
+* { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --primary:#1a73e8; --primary-dark:#1557b0;
+  --danger:#d93025; --success:#0f9d58; --warning:#f9ab00;
+  --bg:#f0f2f5; --card-bg:#fff; --text:#202124; --text2:#5f6368; --border:#dadce0;
+  --boat-1:#f5f5f5; --boat-2:#000; --boat-3:#e8453c; --boat-4:#1a73e8; --boat-5:#f9ab00; --boat-6:#0f9d58;
+}
+
+body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Hiragino Sans',sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+
+header { background:linear-gradient(135deg,#b71c1c,#d32f2f); color:#fff; padding:20px 16px; text-align:center; }
+header h1 { font-size:1.8rem; letter-spacing:0.05em; }
+.subtitle { opacity:0.85; font-size:0.9rem; }
+
+main { max-width:960px; margin:0 auto; padding:16px; }
+
+.card { background:var(--card-bg); border-radius:12px; padding:20px; margin-bottom:16px; box-shadow:0 1px 3px rgba(0,0,0,0.1); }
+.card h2 { font-size:1.1rem; margin-bottom:12px; padding-bottom:8px; border-bottom:2px solid var(--primary); color:var(--primary-dark); }
+.hint { font-size:0.82rem; color:var(--text2); margin-bottom:10px; }
+.hidden { display:none !important; }
+
+/* Fields */
+.step1-header { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:10px; }
+.field label { display:block; font-size:0.82rem; font-weight:600; margin-bottom:3px; color:var(--text2); }
+.field input, .field select { width:100%; padding:7px 10px; border:1px solid var(--border); border-radius:7px; font-size:0.9rem; }
+.field input:focus, .field select:focus { outline:none; border-color:var(--primary); box-shadow:0 0 0 2px rgba(26,115,232,0.2); }
+
+/* Buttons */
+.btn { padding:8px 20px; border:none; border-radius:8px; font-size:0.9rem; font-weight:600; cursor:pointer; transition:all 0.15s; }
+.btn:active { transform:scale(0.97); }
+.btn-primary { background:var(--primary); color:#fff; }
+.btn-primary:hover { background:var(--primary-dark); }
+.btn-secondary { background:#e8eaed; color:var(--text); }
+.btn-danger { background:var(--danger); color:#fff; }
+.btn-large { padding:14px 40px; font-size:1.05rem; }
+.action-area { display:flex; justify-content:center; margin:16px 0; }
+
+/* Boat numbers */
+.bn { display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; border-radius:50%; font-weight:700; font-size:0.8rem; }
+.bn-sm { width:20px; height:20px; font-size:0.68rem; }
+.b1 { background:var(--boat-1); color:#000; border:2px solid #bbb; }
+.b2 { background:var(--boat-2); color:#fff; }
+.b3 { background:var(--boat-3); color:#fff; }
+.b4 { background:var(--boat-4); color:#fff; }
+.b5 { background:var(--boat-5); color:#000; }
+.b6 { background:var(--boat-6); color:#fff; }
+
+/* Race Grid */
+.race-grid-item { margin-bottom:14px; border:1px solid var(--border); border-radius:8px; overflow:hidden; }
+.race-grid-header { display:flex; align-items:center; gap:8px; padding:8px 12px; background:#f1f3f5; font-weight:700; font-size:0.9rem; cursor:pointer; user-select:none; }
+.race-grid-header .race-time { font-size:0.8rem; color:var(--text2); font-weight:400; }
+.race-grid-body { padding:8px; }
+.race-grid-body.collapsed { display:none; }
+
+.rg-table { width:100%; border-collapse:collapse; font-size:0.82rem; }
+.rg-table th { padding:5px 4px; text-align:center; font-size:0.75rem; color:var(--text2); background:#fafbfc; border-bottom:1px solid var(--border); }
+.rg-table td { padding:3px 2px; text-align:center; }
+.rg-table input, .rg-table select { width:100%; padding:4px 2px; border:1px solid var(--border); border-radius:4px; font-size:0.8rem; text-align:center; min-width:48px; }
+.rg-table input:focus, .rg-table select:focus { outline:none; border-color:var(--primary); }
+
+/* Korogashi Plan */
+.kg-step { display:flex; align-items:stretch; margin-bottom:0; position:relative; }
+.kg-step-num { width:48px; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; padding-top:18px; }
+.kg-step-circle { width:36px; height:36px; border-radius:50%; background:var(--primary); color:#fff; font-weight:700; font-size:1rem; display:flex; align-items:center; justify-content:center; }
+.kg-step-line { flex:1; width:3px; background:var(--primary); margin-top:4px; min-height:20px; }
+.kg-step:last-child .kg-step-line { display:none; }
+
+.kg-card { flex:1; border:2px solid var(--border); border-radius:10px; padding:14px; margin-bottom:12px; background:#fff; }
+.kg-card.top { border-color:#ffd700; background:#fffdf0; }
+
+.kg-race-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
+.kg-race-name { font-size:1.05rem; font-weight:700; }
+.kg-race-time { font-size:0.85rem; color:var(--text2); }
+
+.kg-badge { display:inline-block; padding:2px 10px; border-radius:12px; font-size:0.75rem; font-weight:600; }
+.badge-s { background:#e6f4ea; color:var(--success); }
+.badge-a { background:#e8f0fe; color:var(--primary); }
+.badge-b { background:#fef7e0; color:#b06d00; }
+.badge-c { background:#fce8e6; color:var(--danger); }
+
+.firmness-bar { height:6px; background:#e8eaed; border-radius:3px; overflow:hidden; margin:6px 0; }
+.firmness-fill { height:100%; border-radius:3px; }
+
+/* Box */
+.box-area { background:#f0f4f8; border-radius:8px; padding:10px; margin-top:8px; }
+.box-label { font-size:0.82rem; font-weight:600; color:var(--primary-dark); margin-bottom:6px; }
+.box-boats { display:flex; gap:6px; align-items:center; margin-bottom:8px; }
+.box-boats .bn { width:32px; height:32px; font-size:0.95rem; }
+.box-combos { display:grid; grid-template-columns:repeat(3,1fr); gap:4px; }
+.box-combo { display:flex; align-items:center; justify-content:center; gap:2px; padding:4px; background:#fff; border-radius:5px; font-size:0.78rem; border:1px solid var(--border); }
+.box-prob { margin-top:6px; font-size:0.88rem; }
+.box-prob strong { color:var(--primary); font-size:1.1rem; }
+
+/* Score bars */
+.sc-row { display:flex; align-items:center; gap:5px; margin:2px 0; font-size:0.8rem; }
+.sc-row.in-box { font-weight:600; }
+.sc-name { min-width:28px; }
+.sc-rank { min-width:22px; font-size:0.7rem; color:var(--text2); }
+.sc-bar-bg { flex:1; height:12px; background:#e8eaed; border-radius:3px; overflow:hidden; }
+.sc-bar { height:100%; border-radius:3px; }
+.sc-val { min-width:32px; text-align:right; font-weight:600; }
+.sc-border { border-top:1px dashed var(--danger); margin:3px 0; opacity:0.5; }
+
+/* Weather & meta */
+.kg-meta { display:flex; align-items:center; gap:8px; margin-bottom:4px; flex-wrap:wrap; }
+.kg-weather { font-size:0.78rem; color:var(--text2); background:#f0f4f8; padding:2px 8px; border-radius:10px; }
+.box-expanded { font-size:0.7rem; color:#fff; background:var(--warning); padding:1px 6px; border-radius:8px; margin-left:4px; }
+
+/* Results ROI */
+.results-roi { font-size:0.82rem; color:var(--text2); }
+
+/* Summary */
+.summary-box { background:linear-gradient(135deg,#1a237e,#283593); color:#fff; border-radius:10px; padding:18px; margin-top:14px; text-align:center; }
+.summary-title { font-size:1rem; margin-bottom:8px; opacity:0.9; }
+.summary-nums { display:flex; justify-content:center; gap:24px; flex-wrap:wrap; }
+.summary-item { text-align:center; }
+.summary-item .label { font-size:0.78rem; opacity:0.8; }
+.summary-item .val { font-size:1.5rem; font-weight:700; }
+
+/* Ranking Tabs */
+.rank-tabs { display:flex; gap:0; margin-bottom:12px; border-bottom:2px solid var(--border); }
+.rank-tab { flex:1; padding:10px 16px; border:none; background:none; font-size:0.9rem; font-weight:600; color:var(--text2); cursor:pointer; border-bottom:3px solid transparent; margin-bottom:-2px; transition:all 0.15s; }
+.rank-tab:hover { color:var(--text); background:#f8f9fa; }
+.rank-tab.active { color:var(--primary); border-bottom-color:var(--primary); }
+
+/* Ranking */
+.rank-row { display:flex; align-items:center; padding:8px 10px; border-bottom:1px solid var(--border); gap:10px; }
+.rank-row:last-child { border-bottom:none; }
+.rank-num { font-weight:700; min-width:24px; text-align:center; font-size:0.85rem; }
+.rank-name { flex:1; font-weight:600; font-size:0.88rem; }
+.rank-boats { display:flex; gap:2px; }
+.rank-score { font-size:0.82rem; color:var(--text2); }
+
+/* Loading */
+.loading { text-align:center; padding:30px; }
+.loading.hidden { display:none; }
+.spinner { width:40px; height:40px; border:4px solid var(--border); border-top:4px solid var(--primary); border-radius:50%; animation:spin 0.8s linear infinite; margin:0 auto 12px; }
+@keyframes spin { to { transform:rotate(360deg); } }
+.loading p { color:var(--text2); font-size:0.9rem; }
+
+/* Status */
+.status-msg { margin-top:10px; padding:10px; border-radius:8px; font-size:0.85rem; }
+.status-msg.hidden { display:none; }
+.status-msg.error { background:#fce8e6; color:var(--danger); }
+.status-msg.success { background:#e6f4ea; color:var(--success); }
+.status-msg.info { background:#e8f0fe; color:var(--primary); }
+
+/* Main Tabs */
+.main-tabs { display:flex; gap:0; margin-bottom:16px; background:var(--card-bg); border-radius:12px; box-shadow:0 1px 3px rgba(0,0,0,0.1); overflow:hidden; }
+.main-tab { flex:1; padding:14px 16px; border:none; background:none; font-size:0.95rem; font-weight:600; color:var(--text2); cursor:pointer; transition:all 0.15s; border-bottom:3px solid transparent; }
+.main-tab:hover { background:#f8f9fa; color:var(--text); }
+.main-tab.active { color:var(--primary); border-bottom-color:var(--primary); background:#fff; }
+
+/* How to Use */
+.howto { }
+.howto-intro { font-size:0.92rem; line-height:1.7; margin-bottom:18px; color:var(--text); }
+.howto-item { display:flex; gap:12px; align-items:flex-start; padding:14px 0; border-bottom:1px solid var(--border); }
+.howto-item:last-child { border-bottom:none; }
+.howto-icon { font-size:1.5rem; min-width:36px; text-align:center; padding-top:2px; }
+.howto-title { font-weight:700; font-size:0.95rem; margin-bottom:4px; color:var(--text); }
+.howto-desc { font-size:0.88rem; line-height:1.7; color:var(--text2); }
+.howto-labels { background:#f8f9fa; border-radius:10px; padding:12px 16px; margin:14px 0; }
+.howto-label-row { display:flex; align-items:center; gap:10px; padding:6px 0; font-size:0.88rem; }
+.howto-box-explain { background:linear-gradient(135deg,#e8f0fe,#f0f4ff); border-radius:12px; padding:16px; margin-top:14px; }
+.howto-box-title { font-weight:700; font-size:1rem; margin-bottom:8px; }
+.howto-box-example { margin-top:12px; }
+.howto-box-label { font-size:0.85rem; font-weight:600; margin-bottom:8px; color:var(--text2); }
+.howto-box-combos { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; }
+.howto-box-combos span { background:#fff; padding:6px 8px; border-radius:6px; text-align:center; font-size:0.85rem; font-weight:600; border:1px solid var(--border); }
+.howto-box-note { margin-top:10px; font-size:0.88rem; font-weight:600; color:var(--primary); text-align:center; }
+
+/* Compare table */
+.howto-compare-table { width:100%; border-collapse:collapse; margin-top:12px; font-size:0.85rem; }
+.howto-compare-table th { background:var(--primary); color:#fff; padding:8px 10px; text-align:center; font-weight:600; }
+.howto-compare-table th:first-child { background:transparent; }
+.howto-compare-table td { padding:8px 10px; text-align:center; border-bottom:1px solid var(--border); }
+.howto-compare-label { font-weight:600; text-align:left !important; color:var(--text2); }
+.howto-compare-good { color:var(--danger); font-weight:700; }
+
+/* Sanrenpuku display */
+.box-sanrenpuku { font-size:1.2rem; font-weight:700; text-align:center; padding:8px 0; color:var(--primary-dark); letter-spacing:0.15em; }
+
+/* Header user info */
+.header-user { display:flex; align-items:center; justify-content:center; gap:10px; margin-top:8px; font-size:0.82rem; }
+.header-email { opacity:0.85; }
+.header-badge-premium { background:#ffd700; color:#000; padding:2px 8px; border-radius:10px; font-weight:700; font-size:0.72rem; }
+.header-logout { background:rgba(255,255,255,0.2); border:1px solid rgba(255,255,255,0.4); color:#fff; padding:3px 12px; border-radius:6px; font-size:0.78rem; cursor:pointer; }
+.header-logout:hover { background:rgba(255,255,255,0.3); }
+
+/* Auth Screen */
+.auth-container { min-height:100vh; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#b71c1c 0%,#d32f2f 50%,#e53935 100%); padding:16px; }
+.auth-card { background:#fff; border-radius:16px; padding:32px 28px; max-width:400px; width:100%; box-shadow:0 8px 32px rgba(0,0,0,0.2); }
+.auth-title { text-align:center; font-size:1.6rem; color:var(--danger); margin-bottom:4px; }
+.auth-subtitle { text-align:center; font-size:0.85rem; color:var(--text2); margin-bottom:20px; }
+.auth-tabs { display:flex; margin-bottom:20px; border-bottom:2px solid var(--border); }
+.auth-tab { flex:1; padding:10px; border:none; background:none; font-size:0.9rem; font-weight:600; color:var(--text2); cursor:pointer; border-bottom:3px solid transparent; margin-bottom:-2px; }
+.auth-tab.active { color:var(--primary); border-bottom-color:var(--primary); }
+.auth-form { display:flex; flex-direction:column; gap:14px; }
+.auth-field label { display:block; font-size:0.82rem; font-weight:600; color:var(--text2); margin-bottom:4px; }
+.auth-field input { width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:8px; font-size:0.9rem; }
+.auth-field input:focus { outline:none; border-color:var(--primary); box-shadow:0 0 0 2px rgba(26,115,232,0.2); }
+.auth-error { background:#fce8e6; color:var(--danger); padding:8px 12px; border-radius:8px; font-size:0.85rem; }
+.auth-btn { width:100%; padding:12px; font-size:1rem; border-radius:10px; margin-top:4px; }
+.auth-success { text-align:center; padding:20px 0; }
+.auth-success p { font-size:1rem; font-weight:600; }
+.auth-hint { font-size:0.85rem; color:var(--text2); margin-top:8px; }
+
+/* Paywall */
+.paywall { text-align:center; }
+.paywall-content { padding:20px 0; }
+.paywall-content p { margin-bottom:8px; }
+.paywall-price { font-size:1.2rem; font-weight:700; color:var(--primary); margin:12px 0; }
+.paywall-btn { display:inline-block; text-decoration:none; margin-top:8px; }
+
+/* 更新時刻 */
+.update-info { font-size:0.72rem; opacity:0.7; margin-top:2px; }
+
+/* 日付セレクター */
+.date-selector { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.date-selector label { font-size:0.85rem; font-weight:600; color:var(--text2); white-space:nowrap; }
+.date-selector input[type="date"] { padding:6px 10px; border:1px solid var(--border); border-radius:7px; font-size:0.9rem; }
+.date-info { font-size:0.8rem; color:var(--success); font-weight:600; }
+
+/* 結果チェック */
+.results-card { }
+.results-summary { display:flex; align-items:center; gap:12px; margin-bottom:14px; }
+.results-score { font-size:1.4rem; font-weight:800; color:var(--text2); }
+.results-score.good { color:var(--warning); }
+.results-score.great { color:var(--success); }
+.results-perfect { background:linear-gradient(135deg,#f9ab00,#ff6d00); color:#fff; padding:4px 14px; border-radius:20px; font-weight:700; font-size:0.85rem; animation:pulse 1.5s infinite; }
+@keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.05)} }
+
+.results-list { display:flex; flex-direction:column; gap:8px; }
+.result-item { border:1px solid var(--border); border-radius:10px; padding:10px 12px; transition:all 0.2s; }
+.result-item.hit { border-color:var(--success); background:rgba(15,157,88,0.04); }
+.result-item.miss { border-color:var(--danger); background:rgba(217,48,37,0.03); }
+.result-item.pending { border-color:var(--border); opacity:0.7; }
+
+.result-race { display:flex; align-items:center; gap:8px; margin-bottom:6px; }
+.result-step { width:22px; height:22px; border-radius:50%; background:var(--primary); color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.7rem; font-weight:700; }
+.result-venue { font-weight:700; font-size:0.9rem; }
+.result-time { font-size:0.78rem; color:var(--text2); margin-left:auto; }
+
+.result-detail { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.result-label { font-size:0.7rem; color:var(--text2); margin-right:4px; }
+.result-predict, .result-actual { display:flex; align-items:center; gap:4px; }
+.result-boats .bn-sm { width:20px; height:20px; font-size:0.7rem; }
+.result-payout { color:var(--success); font-weight:700; font-size:0.85rem; margin-left:4px; }
+.result-pending-text { font-size:0.8rem; color:var(--text2); }
+
+.result-badge { margin-left:auto; }
+.hit-badge { background:var(--success); color:#fff; padding:2px 10px; border-radius:12px; font-size:0.75rem; font-weight:700; }
+.miss-badge { background:var(--danger); color:#fff; padding:2px 10px; border-radius:12px; font-size:0.75rem; font-weight:700; }
+.pending-badge { color:var(--text2); font-size:0.8rem; }
+
+footer { text-align:center; padding:20px 16px; font-size:0.78rem; color:var(--text2); border-top:1px solid var(--border); margin-top:24px; }
+footer p { margin-bottom:4px; }
+
+/* ==============================
+   レスポンシブ（タブレット）
+   ============================== */
+@media (max-width:768px) {
+  header h1 { font-size:1.4rem; }
+  .step1-header { grid-template-columns:1fr 1fr; }
+  .action-area { flex-direction:column; align-items:stretch; }
+  .summary-nums { gap:12px; }
+}
+
+/* ==============================
+   レスポンシブ（スマホ）
+   ============================== */
+@media (max-width:480px) {
+  body { font-size:14px; }
+
+  header { padding:14px 12px; position:sticky; top:0; z-index:100; }
+  header h1 { font-size:1.3rem; }
+  .subtitle { font-size:0.8rem; }
+
+  main { padding:8px; }
+  .card { padding:12px; border-radius:10px; }
+  .card h2 { font-size:1rem; }
+
+  /* タブ固定 */
+  .main-tabs { position:sticky; top:62px; z-index:99; border-radius:0; margin-bottom:8px; }
+  .main-tab { padding:10px 8px; font-size:0.85rem; }
+
+  /* 転がしカード */
+  .kg-step-num { width:36px; }
+  .kg-step-circle { width:30px; height:30px; font-size:0.85rem; }
+  .kg-card { padding:10px; margin-bottom:8px; }
+  .kg-race-name { font-size:0.95rem; }
+  .kg-race-time { font-size:0.8rem; }
+
+  /* スコアバー */
+  .sc-row { margin:1px 0; }
+  .sc-name { min-width:28px; }
+  .sc-val { min-width:28px; font-size:0.75rem; }
+
+  /* 三連複エリア */
+  .box-area { padding:8px; }
+  .box-boats .bn { width:28px; height:28px; font-size:0.85rem; }
+  .box-sanrenpuku { font-size:1.1rem; padding:6px 0; }
+  .box-prob { font-size:0.82rem; }
+  .box-prob strong { font-size:1rem; }
+
+  /* サマリー */
+  .summary-box { padding:14px 10px; margin-top:10px; }
+  .summary-title { font-size:0.88rem; }
+  .summary-nums { gap:8px; }
+  .summary-item .label { font-size:0.7rem; }
+  .summary-item .val { font-size:1.2rem; }
+
+  /* ランキング行 - スマホ最適化 */
+  .rank-row { padding:8px 6px; gap:6px; flex-wrap:wrap; }
+  .rank-num { min-width:20px; font-size:0.8rem; }
+  .rank-name { font-size:0.82rem; min-width:0; flex-basis:auto; }
+  .rank-boats { gap:1px; }
+  .rank-boats .bn-sm { width:18px; height:18px; font-size:0.62rem; }
+  .rank-score { font-size:0.78rem; }
+  .rank-row .kg-badge { font-size:0.68rem; padding:1px 6px; }
+
+  /* ランキングタブ */
+  .rank-tab { padding:8px 12px; font-size:0.82rem; }
+
+  /* 使い方ページ */
+  .howto-intro { font-size:0.85rem; }
+  .howto-icon { font-size:1.3rem; min-width:30px; }
+  .howto-title { font-size:0.88rem; }
+  .howto-desc { font-size:0.82rem; }
+  .howto-box-explain { padding:12px; }
+  .howto-box-title { font-size:0.92rem; }
+
+  /* 比較テーブル */
+  .howto-compare-table { font-size:0.78rem; }
+  .howto-compare-table th, .howto-compare-table td { padding:6px 4px; }
+
+  /* 選手情報行 */
+  .step1-header { grid-template-columns:1fr; }
+
+  /* 認証画面 */
+  .auth-card { padding:24px 18px; }
+  .auth-title { font-size:1.3rem; }
+
+  /* 更新情報 */
+  .update-info { font-size:0.65rem; }
+
+  /* 日付セレクター */
+  .date-selector { gap:6px; }
+  .date-selector input[type="date"] { font-size:0.85rem; }
+
+  /* 結果 */
+  .results-score { font-size:1.2rem; }
+  .result-item { padding:8px 10px; }
+  .result-detail { gap:6px; }
+  .result-boats .bn-sm { width:18px; height:18px; font-size:0.65rem; }
+
+  /* フッター */
+  footer { font-size:0.72rem; padding:14px 10px; }
+}

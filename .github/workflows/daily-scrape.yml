@@ -1,0 +1,78 @@
+name: Daily Race Data Update
+
+on:
+  schedule:
+    # 毎朝 7:00 JST (22:00 UTC 前日) に今日のレースデータを取得
+    - cron: '0 22 * * *'
+    # 毎晩 21:30 JST (12:30 UTC) に今日の結果を取得
+    - cron: '30 12 * * *'
+  workflow_dispatch:
+    inputs:
+      date:
+        description: 'Date to scrape (YYYY-MM-DD)'
+        required: false
+      type:
+        description: 'Type: races or results or both'
+        required: false
+        default: 'both'
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Determine date and type
+        id: config
+        run: |
+          if [ -n "${{ github.event.inputs.date }}" ]; then
+            echo "date=${{ github.event.inputs.date }}" >> $GITHUB_OUTPUT
+            echo "type=${{ github.event.inputs.type }}" >> $GITHUB_OUTPUT
+          else
+            # JST = UTC+9
+            JST_DATE=$(TZ=Asia/Tokyo date +%Y-%m-%d)
+            JST_HOUR=$(TZ=Asia/Tokyo date +%H)
+            echo "date=$JST_DATE" >> $GITHUB_OUTPUT
+            # 朝(22:00 UTC = 7:00 JST)→races、夜(12:30 UTC = 21:30 JST)→results
+            if [ "${{ github.event.schedule }}" = "0 22 * * *" ]; then
+              # 朝のcron: 翌日のデータを取得（UTC 22:00 = JST翌日7:00）
+              TOMORROW=$(TZ=Asia/Tokyo date -d '+1 day' +%Y-%m-%d 2>/dev/null || TZ=Asia/Tokyo date -v+1d +%Y-%m-%d)
+              echo "date=$TOMORROW" >> $GITHUB_OUTPUT
+              echo "type=races" >> $GITHUB_OUTPUT
+            else
+              echo "type=results" >> $GITHUB_OUTPUT
+            fi
+          fi
+
+      - name: Scrape race data
+        if: steps.config.outputs.type == 'races' || steps.config.outputs.type == 'both'
+        run: node scripts/scrape-date.mjs ${{ steps.config.outputs.date }}
+        continue-on-error: true
+
+      - name: Scrape results
+        if: steps.config.outputs.type == 'results' || steps.config.outputs.type == 'both'
+        run: node scripts/scrape-results.mjs ${{ steps.config.outputs.date }}
+        continue-on-error: true
+
+      - name: Clean old data (keep 7 days)
+        run: |
+          cd public/data
+          # 7日以上前のファイルを削除
+          find . -name "*.json" -mtime +7 -delete 2>/dev/null || true
+          ls -la
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/data/
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "data: update race data for ${{ steps.config.outputs.date }}"
+            git push
+          fi
